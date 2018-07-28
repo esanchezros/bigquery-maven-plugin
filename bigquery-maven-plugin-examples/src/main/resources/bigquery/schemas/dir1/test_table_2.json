@@ -1,0 +1,38 @@
+[
+  {
+    "name": "time",
+    "mode": "REQUIRED",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "id",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "subject",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "from",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "to",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "cc",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "body",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  }
+]
+

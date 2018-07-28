@@ -1,0 +1,10 @@
+target
+*.iml
+*.ipr
+*.iws
+*.ids
+.project
+.idea
+.DS_Store
+installPlugin.txt
+**/**/it-credentials.json

@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.allune</groupId>
+    <artifactId>bigquery-maven-plugin-examples</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>BigQuery Maven Plugin Examples</name>
+    <description>BigQuery Maven Plugin Examples</description>
+
+    <properties>
+        <skipTests>true</skipTests>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.allune</groupId>
+                <artifactId>bigquery-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <projectId>your-project-id</projectId>
+                    <credentialsFile>/it-credentials.json</credentialsFile>
+                    <datasetName>dataset</datasetName>
+                    <dataLocation>EU</dataLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create</id>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                            <createDataset>true</createDataset>
+                            <sourceUri>gs://folder/data.json</sourceUri>
+                            <formatOptions>CSV</formatOptions>
+                            <nativeSchemaLocations>file://${project.basedir}/src/main/resources/bigquery/schemas/dir1</nativeSchemaLocations>
+                            <externalSchemaLocations>classpath:/bigquery/schemas/dir2</externalSchemaLocations>
+                            <viewLocations>file://${project.basedir}/src/main/resources/bigquery/views</viewLocations>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                            <deleteDataset>true</deleteDataset>
+                            <forceDeleteDataset>true</forceDeleteDataset>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,1 @@
+SELECT * FROM `$projectId`.`$datasetName`.test_table_1 LIMIT 1000
