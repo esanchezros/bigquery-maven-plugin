@@ -37,7 +37,7 @@ In your application, add the following plugin to your pom.xml:
 <plugin>
     <groupId>com.allune</groupId>
     <artifactId>bigquery-maven-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <configuration>
         <projectId>your_project_id</projectId>
         <credentialsFile>/credentials.json</credentialsFile>
