@@ -1,32 +1,39 @@
-# BigQuery Maven plugin
+image:https://travis-ci.org/esanchezros/bigquery-maven-plugin.svg?branch=master["Build Status", link="https://travis-ci.org/esanchezros/bigquery-maven-plugin"]
+image:https://codecov.io/gh/esanchezros/quickfixj-spring-boot-starter/branch/2.0.x/graph/badge.svg["codecov", link="https://codecov.io/gh/esanchezros/quickfixj-spring-boot-starter"]
+image:https://img.shields.io/hexpm/l/plug.svg["Apache 2", link="http://www.apache.org/licenses/LICENSE-2.0"]
+
+= BigQuery Maven plugin
 
 This Maven plugin provides goals to create datasets, tables and views in Google BigQuery.
 
-# How to use
+== How to use
 
 In your application, add the following plugin to your pom.xml:
 
-```XML
+[source, xml]
+----
 <plugin>
     <groupId>com.allune</groupId>
     <artifactId>bigquery-maven-plugin</artifactId>
     <version>1.0.0</version>
 </plugin>
-```
+----
 
-# Supported goals
+== Supported goals
 
-Goal | Description
---- | ---
-bigquery:create|Creates the dataset, tables and views defined in the plugin configuration.
-bigquery:create-dataset|Creates the dataset defined in the plugin configuration.
-bigquery:clean|Removes the dataset, tables and views defined in the plugin configuration.
-bigquery:help|Displays help information on the plugin. Use `mvn bigquery:help -Ddetail=true -Dgoal=[goal]` for detailed goal documentation.
+|===
+|Goal | Description
 
+|bigquery:create|Creates the dataset, tables and views defined in the plugin configuration.
+|bigquery:create-dataset|Creates the dataset defined in the plugin configuration.
+|bigquery:clean|Removes the dataset, tables and views defined in the plugin configuration.
+|bigquery:help|Displays help information on the plugin. Use `mvn bigquery:help -Ddetail=true -Dgoal=[goal]` for detailed goal documentation.
+|===
 
-# Example plugin configuration
+== Example plugin configuration
 
-```XML
+[source, xml]
+----
 <plugin>
     <groupId>com.allune</groupId>
     <artifactId>bigquery-maven-plugin</artifactId>
@@ -68,4 +75,4 @@ bigquery:help|Displays help information on the plugin. Use `mvn bigquery:help -D
         </execution>
     </executions>
 </plugin>
-```
+----
