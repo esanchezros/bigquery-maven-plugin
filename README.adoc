@@ -1,5 +1,5 @@
 image:https://travis-ci.org/esanchezros/bigquery-maven-plugin.svg?branch=master["Build Status", link="https://travis-ci.org/esanchezros/bigquery-maven-plugin"]
-image:https://codecov.io/gh/esanchezros/quickfixj-spring-boot-starter/branch/2.0.x/graph/badge.svg["codecov", link="https://codecov.io/gh/esanchezros/quickfixj-spring-boot-starter"]
+image:https://codecov.io/gh/esanchezros/bigquery-maven-plugin/branch/master/graph/badge.svg["codecov", link="https://codecov.io/gh/esanchezros/bigquery-maven-plugin"]
 image:https://img.shields.io/hexpm/l/plug.svg["Apache 2", link="http://www.apache.org/licenses/LICENSE-2.0"]
 
 = BigQuery Maven plugin
