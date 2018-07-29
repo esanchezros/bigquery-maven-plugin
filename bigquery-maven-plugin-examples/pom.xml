@@ -19,7 +19,7 @@
             <plugin>
                 <groupId>com.allune</groupId>
                 <artifactId>bigquery-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1-SNAPSHOT</version>
                 <configuration>
                     <projectId>your-project-id</projectId>
                     <credentialsFile>/it-credentials.json</credentialsFile>
