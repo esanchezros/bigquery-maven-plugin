@@ -1,3 +1,19 @@
+/*
+ * Copyright 2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.allune.bigquery.maven.service;
 
 import com.google.api.gax.paging.Page;
@@ -124,7 +140,7 @@ public class BigQueryServiceImpl implements BigQueryService {
 
         SchemaLocations loc = new SchemaLocations(locations);
         List<Resource> loadedResources = new ArrayList<>();
-        loc.getSchemaLocation().forEach(location -> {
+        loc.getSchemaLocations().forEach(location -> {
             try {
                 Resource resource = resolver.getResource(location.getDescriptor());
                 if (resource != null && resource.isReadable()) {
@@ -136,7 +152,6 @@ public class BigQueryServiceImpl implements BigQueryService {
             } catch (IOException e) {
                 throw new ConfigurationException(e.getMessage(), e);
             }
-
         });
 
         return loadedResources;
