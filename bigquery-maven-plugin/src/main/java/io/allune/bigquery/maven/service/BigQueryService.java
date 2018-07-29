@@ -4,15 +4,15 @@ import java.util.List;
 
 public interface BigQueryService {
 
-    void createDataSet(String dataset);
+    void createDataset(String dataLocation);
 
-    void createNativeTables(String dataset, List<String> locations);
+    void createNativeTables(List<String> locations);
 
-    void createExternalTables(String dataset, String sourceUri, String formatOptions, List<String> locations);
+    void createExternalTables(String sourceUri, String formatOptions, List<String> locations);
 
-    void createViews(String dataset, List<String> locations);
+    void createViews(List<String> locations);
 
-    void deleteTables(String dataset);
+    void deleteTables();
 
-    void deleteDataset(String dataset, boolean forceDelete);
+    void deleteDataset(boolean forceDelete);
 }

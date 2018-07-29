@@ -41,14 +41,14 @@ public class CleanMojo extends AbstractBigQueryMojo {
         try {
 
             if (forceDeleteDataset) {
-                bigQueryService.deleteDataset(datasetName, true);
+                bigQueryService.deleteDataset(true);
             } else {
 
                 if (deleteTables) {
-                    bigQueryService.deleteTables(datasetName);
+                    bigQueryService.deleteTables();
                 }
                 if (deleteDataset) {
-                    bigQueryService.deleteDataset(datasetName, false);
+                    bigQueryService.deleteDataset(false);
                 }
             }
         } catch (BigQueryException e) {

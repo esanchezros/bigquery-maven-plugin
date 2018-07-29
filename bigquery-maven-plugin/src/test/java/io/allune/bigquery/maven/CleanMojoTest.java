@@ -5,16 +5,11 @@ import io.allune.bigquery.maven.service.BigQueryServiceImpl;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
@@ -25,9 +20,6 @@ public class CleanMojoTest {
 
     @Mock
     private BigQueryServiceImpl bigQueryService;
-
-    @Captor
-    private ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 
     @Test
     public void testDeleteTables() throws MojoExecutionException {
@@ -42,9 +34,8 @@ public class CleanMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).deleteTables(captor.capture());
-        assertThat(captor.getValue(), is(expectedDataset));
-        verify(bigQueryService, never()).deleteDataset(anyString(), eq(false));
+        verify(bigQueryService).deleteTables();
+        verify(bigQueryService, never()).deleteDataset(eq(false));
     }
 
     @Test
@@ -52,7 +43,7 @@ public class CleanMojoTest {
         // Given
         CleanMojo mojo = new CleanMojo();
         mojo.setDeleteTables(true);
-        doThrow(BigQueryException.class).when(bigQueryService).deleteTables(anyString());
+        doThrow(BigQueryException.class).when(bigQueryService).deleteTables();
 
         try {
             // When
@@ -78,8 +69,7 @@ public class CleanMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).deleteDataset(captor.capture(), eq(false));
-        assertThat(captor.getValue(), is(expectedDataset));
+        verify(bigQueryService).deleteDataset(eq(false));
     }
 
     @Test
@@ -87,7 +77,7 @@ public class CleanMojoTest {
         // Given
         CleanMojo mojo = new CleanMojo();
         mojo.setDeleteDataset(true);
-        doThrow(BigQueryException.class).when(bigQueryService).deleteDataset(anyString(), eq(false));
+        doThrow(BigQueryException.class).when(bigQueryService).deleteDataset(eq(false));
 
         try {
             // When
@@ -114,8 +104,7 @@ public class CleanMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).deleteDataset(captor.capture(), eq(true));
-        assertThat(captor.getValue(), is(expectedDataset));
+        verify(bigQueryService).deleteDataset(eq(true));
     }
 
     @Test
@@ -124,7 +113,7 @@ public class CleanMojoTest {
         CleanMojo mojo = new CleanMojo();
         mojo.setDeleteDataset(true);
         mojo.setForceDeleteDataset(true);
-        doThrow(BigQueryException.class).when(bigQueryService).deleteDataset(anyString(), eq(true));
+        doThrow(BigQueryException.class).when(bigQueryService).deleteDataset(eq(true));
 
         try {
             // When

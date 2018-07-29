@@ -1,5 +1,8 @@
 package io.allune.bigquery.maven;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.bigquery.BigQuery;
+import com.google.cloud.bigquery.BigQueryOptions;
 import io.allune.bigquery.maven.service.BigQueryServiceImpl;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
@@ -7,8 +10,12 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,6 +25,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.google.auth.oauth2.GoogleCredentials.getApplicationDefault;
+import static com.google.auth.oauth2.ServiceAccountCredentials.fromStream;
+import static java.lang.Thread.currentThread;
 
 /**
  * Common base class for all mojos with all common attributes.<br>
@@ -41,7 +52,7 @@ public abstract class AbstractBigQueryMojo extends AbstractMojo {
      * The dataset to use for creating the BigQuery tables
      */
     @Parameter(alias = "datasetName", property = "bigquery.datasetName", required = true)
-    String datasetName;
+    private String datasetName;
 
     /**
      * The location of the data. EU by default
@@ -113,10 +124,10 @@ public abstract class AbstractBigQueryMojo extends AbstractMojo {
 
         // Create BigQuery service with the provided credentials
         BigQueryServiceImpl bigQueryService = BigQueryServiceImpl.builder()
+                .bigQuery(bigQuery())
                 .projectId(projectId)
                 .credentialsFile(credentialsFile)
                 .dataset(datasetName)
-                .dataLocation(dataLocation)
                 .logger(log)
                 .build();
 
@@ -145,6 +156,31 @@ public abstract class AbstractBigQueryMojo extends AbstractMojo {
         } catch (DependencyResolutionRequiredException | MalformedURLException e) {
             throw new ConfigurationException(e.getMessage(), e);
         }
+    }
+
+    private BigQuery bigQuery() {
+        return BigQueryOptions.newBuilder()
+                .setCredentials(loadCredentials())
+                .setProjectId(projectId)
+                .build()
+                .getService();
+    }
+
+    private GoogleCredentials loadCredentials() {
+        try {
+            if (credentialsFile != null) {
+                return fromStream(loadResource(credentialsFile).getInputStream());
+            }
+            return getApplicationDefault();
+        } catch (IOException e) {
+            throw new ConfigurationException("Unable to load credentials file " + credentialsFile, e);
+        }
+    }
+
+    private Resource loadResource(String location) {
+        ClassLoader classLoader = currentThread().getContextClassLoader();
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(classLoader);
+        return resolver.getResource(location);
     }
 
     /**

@@ -28,7 +28,7 @@ public class CreateMojoTest {
     private BigQueryServiceImpl bigQueryService;
 
     @Captor
-    private ArgumentCaptor<String> datasetNameCaptor;
+    private ArgumentCaptor<String> dataLocationCaptor;
 
     @Captor
     private ArgumentCaptor<List<String>> schemaListCaptor;
@@ -43,9 +43,10 @@ public class CreateMojoTest {
     private String[] expectedSchemaLocations;
     private String expectedSourceUri;
     private String expectedFormatOptions;
+    private String expectedDataLocation;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         expectedDatasetName = "testDataset";
 
         String schemaLocation1 = "schemaLocation1";
@@ -54,6 +55,7 @@ public class CreateMojoTest {
 
         expectedSourceUri = "sourceUri";
         expectedFormatOptions = "formatOptions";
+        expectedDataLocation = "dataLocation";
     }
 
     @Test
@@ -62,20 +64,21 @@ public class CreateMojoTest {
         CreateMojo mojo = new CreateMojo();
         mojo.setCreateDataset(true);
         mojo.setDatasetName(expectedDatasetName);
+        mojo.setDataLocation(expectedDataLocation);
 
         // When
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).createDataSet(datasetNameCaptor.capture());
-        assertThat(datasetNameCaptor.getValue()).isEqualTo(expectedDatasetName);
+        verify(bigQueryService).createDataset(dataLocationCaptor.capture());
+        assertThat(dataLocationCaptor.getValue()).isEqualTo(expectedDataLocation);
     }
 
     @Test
     public void shouldThrowExceptionIfCreateDatasetFails() {
         CreateMojo mojo = new CreateMojo();
         mojo.setCreateDataset(true);
-        doThrow(BigQueryException.class).when(bigQueryService).createDataSet(anyString());
+        doThrow(BigQueryException.class).when(bigQueryService).createDataset(anyString());
 
         // When
         try {
@@ -99,8 +102,7 @@ public class CreateMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).createNativeTables(datasetNameCaptor.capture(), schemaListCaptor.capture());
-        assertThat(datasetNameCaptor.getValue()).isEqualTo(expectedDatasetName);
+        verify(bigQueryService).createNativeTables(schemaListCaptor.capture());
         assertThat(schemaListCaptor.getValue()).contains(expectedSchemaLocations);
     }
 
@@ -108,7 +110,7 @@ public class CreateMojoTest {
     public void shouldThrowExceptionIfCreateNativeTablesFails() {
         CreateMojo mojo = new CreateMojo();
         mojo.setNativeSchemaLocations(expectedSchemaLocations);
-        doThrow(BigQueryException.class).when(bigQueryService).createNativeTables(anyString(), any(List.class));
+        doThrow(BigQueryException.class).when(bigQueryService).createNativeTables(any(List.class));
 
         // When
         try {
@@ -134,9 +136,8 @@ public class CreateMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).createExternalTables(datasetNameCaptor.capture(), sourceUriCaptor.capture(),
-                formatOptionsCaptor.capture(), schemaListCaptor.capture());
-        assertThat(datasetNameCaptor.getValue()).isEqualTo(expectedDatasetName);
+        verify(bigQueryService).createExternalTables(sourceUriCaptor.capture(), formatOptionsCaptor.capture(),
+                schemaListCaptor.capture());
         assertThat(sourceUriCaptor.getValue()).isEqualTo(expectedSourceUri);
         assertThat(formatOptionsCaptor.getValue()).isEqualTo(expectedFormatOptions);
         assertThat(schemaListCaptor.getValue()).contains(expectedSchemaLocations);
@@ -146,8 +147,7 @@ public class CreateMojoTest {
     public void shouldThrowExceptionIfCreateExternalTablesFails() {
         CreateMojo mojo = new CreateMojo();
         mojo.setExternalSchemaLocations(expectedSchemaLocations);
-        doThrow(BigQueryException.class).when(bigQueryService).createExternalTables(anyString(), anyString(),
-                anyString(), any(List.class));
+        doThrow(BigQueryException.class).when(bigQueryService).createExternalTables(anyString(), anyString(), any(List.class));
 
         // When
         try {
@@ -171,8 +171,7 @@ public class CreateMojoTest {
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).createViews(datasetNameCaptor.capture(), schemaListCaptor.capture());
-        assertThat(datasetNameCaptor.getValue()).isEqualTo(expectedDatasetName);
+        verify(bigQueryService).createViews(schemaListCaptor.capture());
         assertThat(schemaListCaptor.getValue()).contains(expectedSchemaLocations);
     }
 
@@ -180,7 +179,7 @@ public class CreateMojoTest {
     public void shouldThrowExceptionIfCreateViewsFails() {
         CreateMojo mojo = new CreateMojo();
         mojo.setViewLocations(expectedSchemaLocations);
-        doThrow(BigQueryException.class).when(bigQueryService).createViews(anyString(), any(List.class));
+        doThrow(BigQueryException.class).when(bigQueryService).createViews(any(List.class));
 
         // When
         try {

@@ -82,19 +82,19 @@ public class CreateMojo extends AbstractBigQueryMojo {
     protected void doExecute(BigQueryServiceImpl bigQueryService) throws MojoExecutionException {
         try {
             if (createDataset) {
-                bigQueryService.createDataSet(datasetName);
+                bigQueryService.createDataset(getDataLocation());
             }
 
             if (isNotEmpty(nativeSchemaLocations)) {
-                bigQueryService.createNativeTables(datasetName, asList(nativeSchemaLocations));
+                bigQueryService.createNativeTables(asList(nativeSchemaLocations));
             }
 
             if (isNotEmpty(externalSchemaLocations)) {
-                bigQueryService.createExternalTables(datasetName, sourceUri, formatOptions, asList(externalSchemaLocations));
+                bigQueryService.createExternalTables(sourceUri, formatOptions, asList(externalSchemaLocations));
             }
 
             if (isNotEmpty(viewLocations)) {
-                bigQueryService.createViews(datasetName, asList(viewLocations));
+                bigQueryService.createViews(asList(viewLocations));
             }
         } catch (ConfigurationException | BigQueryException e) {
             throw new MojoExecutionException(e.getMessage(), e);
