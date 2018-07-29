@@ -41,13 +41,13 @@ public abstract class AbstractBigQueryMojo extends AbstractMojo {
      * The dataset to use for creating the BigQuery tables
      */
     @Parameter(alias = "datasetName", property = "bigquery.datasetName", required = true)
-    protected String datasetName;
+    String datasetName;
 
     /**
      * The location of the data. EU by default
      */
     @Parameter(alias = "dataLocation", property = "bigquery.dataLocation", defaultValue = "EU")
-    protected String dataLocation;
+    private String dataLocation;
 
     /**
      * The credentials file required to authenticate with BigQuery
@@ -56,9 +56,9 @@ public abstract class AbstractBigQueryMojo extends AbstractMojo {
     private String credentialsFile;
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
-    protected MavenProject mavenProject;
+    private MavenProject mavenProject;
 
-    protected Log log;
+    private Log log;
 
     public boolean isSkip() {
         return skip;

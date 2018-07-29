@@ -54,48 +54,24 @@ public class CreateMojo extends AbstractBigQueryMojo {
     @Parameter(property = "bigquery.formatOptions", defaultValue = "NEWLINE_DELIMITED_JSON")
     private String formatOptions;
 
-    public String[] getNativeSchemaLocations() {
-        return nativeSchemaLocations;
-    }
-
     public void setNativeSchemaLocations(String[] nativeSchemaLocations) {
         this.nativeSchemaLocations = nativeSchemaLocations;
-    }
-
-    public String[] getExternalSchemaLocations() {
-        return externalSchemaLocations;
     }
 
     public void setExternalSchemaLocations(String[] externalSchemaLocations) {
         this.externalSchemaLocations = externalSchemaLocations;
     }
 
-    public String[] getViewLocations() {
-        return viewLocations;
-    }
-
     public void setViewLocations(String[] viewLocations) {
         this.viewLocations = viewLocations;
-    }
-
-    public boolean isCreateDataset() {
-        return createDataset;
     }
 
     public void setCreateDataset(boolean createDataset) {
         this.createDataset = createDataset;
     }
 
-    public String getSourceUri() {
-        return sourceUri;
-    }
-
     public void setSourceUri(String sourceUri) {
         this.sourceUri = sourceUri;
-    }
-
-    public String getFormatOptions() {
-        return formatOptions;
     }
 
     public void setFormatOptions(String formatOptions) {
