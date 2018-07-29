@@ -84,10 +84,10 @@ In your application, add the following plugin to your pom.xml:
 
 A JSON schema file consists of a JSON array that contains the following:
 
-(Optional) The column's description
-The column name
-The column's data type
-(Optional) The column's mode (if unspecified, mode defaults to NULLABLE)
+* (Optional) The column's description
+* The column name
+* The column's data type
+* (Optional) The column's mode (if unspecified, mode defaults to NULLABLE)
 
 Reference: https://cloud.google.com/bigquery/docs/schemas
 
