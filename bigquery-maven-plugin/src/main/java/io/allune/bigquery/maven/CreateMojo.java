@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.ArrayUtils.isNotEmpty;
 
 /**
@@ -109,15 +110,15 @@ public class CreateMojo extends AbstractBigQueryMojo {
             }
 
             if (isNotEmpty(nativeSchemaLocations)) {
-                bigQueryService.createNativeTables(datasetName, nativeSchemaLocations);
+                bigQueryService.createNativeTables(datasetName, asList(nativeSchemaLocations));
             }
 
             if (isNotEmpty(externalSchemaLocations)) {
-                bigQueryService.createExternalTables(datasetName, sourceUri, formatOptions, externalSchemaLocations);
+                bigQueryService.createExternalTables(datasetName, sourceUri, formatOptions, asList(externalSchemaLocations));
             }
 
             if (isNotEmpty(viewLocations)) {
-                bigQueryService.createViews(datasetName, viewLocations);
+                bigQueryService.createViews(datasetName, asList(viewLocations));
             }
         } catch (ConfigurationException | BigQueryException e) {
             throw new MojoExecutionException(e.getMessage(), e);

@@ -12,7 +12,7 @@ public class SchemaLocations {
 
     private final List<SchemaLocation> schemaLocationList = new ArrayList<>();
 
-    public SchemaLocations(String... rawLocations) {
+    public SchemaLocations(List<String> rawLocations) {
         List<SchemaLocation> normalizedSchemaLocations = new ArrayList<>();
         for (String rawLocation : rawLocations) {
             normalizedSchemaLocations.add(new SchemaLocation(rawLocation));

@@ -61,19 +61,19 @@ public class BigQueryServiceImpl implements BigQueryService {
     }
 
     @Override
-    public void createNativeTables(String dataset, String[] locations) {
+    public void createNativeTables(String dataset, List<String> locations) {
         List<Resource> resources = loadResources(locations);
         processNativeSchemas(dataset, resources);
     }
 
     @Override
-    public void createExternalTables(String dataset, String sourceUri, String formatOptions, String[] locations) {
+    public void createExternalTables(String dataset, String sourceUri, String formatOptions, List<String> locations) {
         List<Resource> resources = loadResources(locations);
         processExternalSchemas(dataset, sourceUri, formatOptions, resources);
     }
 
     @Override
-    public void createViews(String dataset, String[] locations) {
+    public void createViews(String dataset, List<String> locations) {
         List<Resource> resources = loadResources(locations);
         processViews(dataset, resources);
     }
@@ -141,7 +141,7 @@ public class BigQueryServiceImpl implements BigQueryService {
         return TableInfo.newBuilder(tableId, tableDefinition).build();
     }
 
-    private static List<Resource> loadResources(String[] locations) {
+    private static List<Resource> loadResources(List<String> locations) {
         ClassLoader classLoader = currentThread().getContextClassLoader();
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(classLoader);
 

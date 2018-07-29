@@ -16,6 +16,9 @@ In your application, add the following plugin to your pom.xml:
     <groupId>com.allune</groupId>
     <artifactId>bigquery-maven-plugin</artifactId>
     <version>1.0.0</version>
+    <configuration>
+        ...
+    </configuration>
 </plugin>
 ----
 
@@ -75,4 +78,99 @@ In your application, add the following plugin to your pom.xml:
         </execution>
     </executions>
 </plugin>
+----
+
+== Schema definition
+
+A JSON schema file consists of a JSON array that contains the following:
+
+(Optional) The column's description
+The column name
+The column's data type
+(Optional) The column's mode (if unspecified, mode defaults to NULLABLE)
+
+Reference: https://cloud.google.com/bigquery/docs/schemas
+
+=== Table name
+
+The schema file name is used as the table name.
+
+=== Example
+
+==== test_table
+
+[source, json]
+----
+[
+  {
+    "name": "id",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "subject",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "from",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "to",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "cc",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "body",
+    "mode": "NULLABLE",
+    "type": "STRING"
+  },
+  {
+    "name": "time",
+    "mode": "NULLABLE",
+    "type": "TIME"
+  },
+  {
+    "name": "timestamp",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "fields",
+    "type": "RECORD",
+    "mode": "REPEATED",
+    "fields": [
+      {
+        "name": "field1",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "moreFields",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "field1",
+            "type": "STRING",
+            "mode": "REQUIRED"
+          },
+          {
+            "name": "field2",
+            "type": "STRING",
+            "mode": "REQUIRED"
+          }
+        ]
+      }
+    ]
+  }
+]
+
 ----
