@@ -10,8 +10,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
@@ -25,28 +24,28 @@ public class CreateDatasetMojoTest {
     private BigQueryServiceImpl bigQueryService;
 
     @Captor
-    private ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+    private ArgumentCaptor<String> dataLocationCaptor;
 
     @Test
     public void testCreateDataset() throws MojoExecutionException {
         // Given
         CreateDatasetMojo mojo = new CreateDatasetMojo();
-        String expectedDataset = "testDataset";
-        mojo.setDatasetName(expectedDataset);
+        String expectedDataLocation = "testDataLocation";
+        mojo.setDataLocation(expectedDataLocation);
 
         // When
         mojo.doExecute(bigQueryService);
 
         // Then
-        verify(bigQueryService).createDataSet(captor.capture());
-        assertThat(captor.getValue(), is(expectedDataset));
+        verify(bigQueryService).createDataset(dataLocationCaptor.capture());
+        assertThat(dataLocationCaptor.getValue()).isEqualTo(expectedDataLocation);
     }
 
     @Test
     public void testCreateDatasetShouldThrowMojoExecutionException() {
         // Given
         CreateDatasetMojo mojo = new CreateDatasetMojo();
-        doThrow(BigQueryException.class).when(bigQueryService).createDataSet(anyString());
+        doThrow(BigQueryException.class).when(bigQueryService).createDataset(anyString());
 
         try {
             // When

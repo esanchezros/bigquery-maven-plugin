@@ -191,6 +191,11 @@
                             <format>xml</format>
                         </formats>
                         <check />
+                        <instrumentation>
+                            <excludes>
+                                <exclude>io/allune/bigquery/maven/ConfigurationException.class</exclude>
+                            </excludes>
+                        </instrumentation>
                     </configuration>
                 </plugin>
 

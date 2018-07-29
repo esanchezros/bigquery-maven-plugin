@@ -24,24 +24,12 @@ public class CleanMojo extends AbstractBigQueryMojo {
     @Parameter(alias = "forceDeleteDataset", property = "bigquery.forceDeleteDataset", defaultValue = "false")
     private boolean forceDeleteDataset;
 
-    public boolean isDeleteDataset() {
-        return deleteDataset;
-    }
-
     public void setDeleteDataset(boolean deleteDataset) {
         this.deleteDataset = deleteDataset;
     }
 
-    public boolean isDeleteTables() {
-        return deleteTables;
-    }
-
     public void setDeleteTables(boolean deleteTables) {
         this.deleteTables = deleteTables;
-    }
-
-    public boolean isForceDeleteDataset() {
-        return forceDeleteDataset;
     }
 
     public void setForceDeleteDataset(boolean forceDeleteDataset) {
@@ -53,14 +41,14 @@ public class CleanMojo extends AbstractBigQueryMojo {
         try {
 
             if (forceDeleteDataset) {
-                bigQueryService.deleteDataset(datasetName, true);
+                bigQueryService.deleteDataset(true);
             } else {
 
                 if (deleteTables) {
-                    bigQueryService.deleteTables(datasetName);
+                    bigQueryService.deleteTables();
                 }
                 if (deleteDataset) {
-                    bigQueryService.deleteDataset(datasetName, false);
+                    bigQueryService.deleteDataset(false);
                 }
             }
         } catch (BigQueryException e) {

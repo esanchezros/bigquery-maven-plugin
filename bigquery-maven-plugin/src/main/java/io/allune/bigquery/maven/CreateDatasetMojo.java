@@ -11,7 +11,7 @@ public class CreateDatasetMojo extends AbstractBigQueryMojo {
     @Override
     protected void doExecute(BigQueryServiceImpl bigQueryService) throws MojoExecutionException {
         try {
-            bigQueryService.createDataSet(datasetName);
+            bigQueryService.createDataset(getDataLocation());
         } catch (BigQueryException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
