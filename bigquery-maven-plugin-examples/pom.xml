@@ -14,12 +14,26 @@
         <skipTests>true</skipTests>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>io.allune</groupId>
                 <artifactId>bigquery-maven-plugin</artifactId>
-                <version>1.1.0</version>
+                <version>1.1.2</version>
                 <configuration>
                     <projectId>your-project-id</projectId>
                     <credentialsFile>/credentials.json</credentialsFile>
