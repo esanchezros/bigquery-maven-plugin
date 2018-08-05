@@ -3,7 +3,7 @@
 
     <groupId>io.allune</groupId>
     <artifactId>bigquery-maven-plugin-parent</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>BigQuery Maven Plugin Parent</name>
@@ -25,7 +25,7 @@
         <url>https://github.com/esanchezros/bigquery-maven-plugin</url>
         <connection>scm:git:git@github.com:esanchezros/bigquery-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:esanchezros/bigquery-maven-plugin.git</developerConnection>
-        <tag>bigquery-maven-plugin-1.1.2</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
